@@ -4,9 +4,16 @@ import argparse
 import os
 import sys
 
+import globals
 
 def main():
-    ...
+    target, reference = parse_cli_args()
+
+    # Usage checks
+
+    # Update global variables
+    globals.target_directory = target
+    globals.reference_spreadsheet = reference
 
 
 def parse_cli_args():
