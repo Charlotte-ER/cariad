@@ -2,6 +2,10 @@
 
 import os
 
-user = os.getlogin()
+# App Info
+VERSION = '0.0.1'
+
+# Runtime variables
+USER = os.getlogin()
 target_directory = None
 reference_spreadsheet = None

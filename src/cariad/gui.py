@@ -1,9 +1,10 @@
 '''Run cariad from gui instead of cli.'''
-import os
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk
 
-import globals
+import variables
+
+
 
 def run_gui():
     '''Set up Root Window'''
@@ -27,7 +28,7 @@ def run_gui():
                     font = ('Calibri', 12, 'bold')).pack()
 
     # Version Details
-    ttk.Label(title_frame, text = 'link to global version goes here',
+    ttk.Label(title_frame, text = variables.VERSION,
                     wraplength = 850,
                     justify = CENTER,
                     font = ('Calibri', 10, 'italic')).pack()
@@ -56,11 +57,9 @@ def run_gui():
     root.mainloop()
 
 
-
-
 def get_target_directory():
-    target = filedialog.askdirectory(initialdir = f'C:/Users/{os.getlogin()}/Documents')
-    globals.target_directory = target
+    target = filedialog.askdirectory(initialdir = f'C:/Users/{variables.USER}/Documents')
+    variables.target_directory = target
     return target
 
 
