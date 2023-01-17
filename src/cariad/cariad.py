@@ -1,19 +1,15 @@
-'''Main module. Run cariad from the cli.'''
+'''Main module. Launch cariad from the cli.'''
 
 import argparse
 import os
 import sys
 
+import run
 import variables
 
 def main():
-    target, reference = parse_cli_args()
-
-    # Usage checks
-
-    # Update global variables
-    variables.target_directory = target
-    variables.reference_spreadsheet = reference
+    variables.target_directory, variables.reference_spreadsheet = parse_cli_args()
+    run.run_cariad(variables.target_directory, variables.reference_spreadsheet, 'cli')
 
 
 def parse_cli_args():
