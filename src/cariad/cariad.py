@@ -32,10 +32,12 @@ def parse_cli_args():
     if not os.path.isdir(target):
         raise sys.exit('Target directory does not exist')
 
-    if not os.path.isfile(os.path.join(target, reference)):
+    reference_path = os.path.join(target, reference)
+
+    if not os.path.isfile(reference_path):
         raise sys.exit('Reference spreadsheet does not exist in target directory')
 
-    return target, reference
+    return target, reference_path
 
 
 if __name__ == '__main__':
