@@ -12,3 +12,6 @@ GUI_TITLE = 'Converting And Renaming Information Access Documents'
 GUI_USER_GUIDE = "User Instructions go here"
 GUI_ASK_TARGET = "Select target directory"
 GUI_ASK_REFERENCE = "Select reference spreadsheet"
+
+INDEX_SHEET_NAME = 'Index'
+INDEX_HEADER_ROW = 3
