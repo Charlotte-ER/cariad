@@ -10,7 +10,39 @@ from tkinter import messagebox
 import variables
 
 def run_cariad(target_directory, reference_spreadsheet, mode):
+    os.chdir(target_directory)
     index = get_index_dataframe_from_spreadsheet(reference_spreadsheet, mode)
+
+
+    # For each row in the index
+    for i in range(len(index)):
+        print_num = index.iloc[i]['Print Index Number']
+        doc_num = index.iloc[i]['Doc. Number']
+        version = index.iloc[i]['Version']
+        extension = index.iloc[i]['Extension'].lower()
+
+        old_name = f'{target_directory}/{doc_num}_{version}.{extension}'
+        new_name = f'{target_directory}/{print_num}.{extension}'
+
+        print(f'Old name: {old_name}')
+        print(f'New name: {new_name}')
+        print()
+
+    # Find it in the folder
+
+    # Rename it
+
+    # If it is an email, get its attachments
+
+        # For each attachment, rename it
+
+        # Convert it to pdf
+
+        # Delete the original
+
+    # Convert it to pdf
+
+    # Delete the original
 
 
 def tell_user(message, mode):
