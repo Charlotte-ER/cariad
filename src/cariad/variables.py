@@ -1,6 +1,7 @@
 '''Global variables. Used by both cli and gui.'''
 
 import os
+import string
 
 VERSION = '0.0.1'
 USER = os.getlogin()
@@ -15,3 +16,9 @@ GUI_ASK_REFERENCE = "Select reference spreadsheet"
 
 INDEX_SHEET_NAME = 'Index'
 INDEX_HEADER_ROW = 3
+
+ALPHABET = string.ascii_lowercase
+NUMERALS = ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix",
+            "x", "xi", "xii", "xiii", "xiv", "xv", "xvi", "xvii",
+            "xviii", "xix", "xx", "xxi", "xxii", "xxiii", "xxiv",
+            "xxv", "xxvi", "xxvii", "xxviii", "xxix", "xxx"]

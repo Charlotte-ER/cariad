@@ -3,16 +3,16 @@ import os
 import re
 import pandas as pd
 import sys
+import win32com.client
 
 from openpyxl import load_workbook
 from tkinter import messagebox
 
 import variables
 
-def run_cariad(target_directory, reference_spreadsheet, mode):
+def run_cariad(target_directory, reference_spreadsheet, mode): 
     os.chdir(target_directory)
     index = get_index_dataframe_from_spreadsheet(reference_spreadsheet, mode)
-
 
     # For each row in the index
     for i in range(len(index)):
@@ -24,25 +24,11 @@ def run_cariad(target_directory, reference_spreadsheet, mode):
         old_name = f'{target_directory}/{doc_num}_{version}.{extension}'
         new_name = f'{target_directory}/{print_num}.{extension}'
 
-        print(f'Old name: {old_name}')
-        print(f'New name: {new_name}')
-        print()
-
-    # Find it in the folder
-
-    # Rename it
-
-    # If it is an email, get its attachments
-
-        # For each attachment, rename it
-
-        # Convert it to pdf
-
-        # Delete the original
-
-    # Convert it to pdf
-
-    # Delete the original
+        if os.path.isfile(old_name):
+            os.rename(old_name, new_name)
+        
+        if extension == 'msg':
+            convert_email(new_name)
 
 
 def tell_user(message, mode):
@@ -81,3 +67,29 @@ def get_index_rows_from_spreadsheet(sheet, header):
             continue
         yield row
 
+
+def convert_email(email, level=1):
+    printnum, _ = os.path.splitext(email)
+
+    if level % 2 != 0:
+        label = variables.ALPHABET
+    else:
+        label = variables.NUMERALS
+    
+    counter = 0
+
+    outlook = win32com.client.Dispatch("Outlook.Application").GetNameSpace("MAPI")
+    message = outlook.OpenSharedItem(email)
+
+    for attachment in message.Attachments:
+        _, ext = os.path.splitext(attachment.FileName)
+
+        name = f'{printnum}({label[counter]}){ext}'
+        attachment.SaveAsFile(name)
+        counter += 1
+
+        if ext.lower() == ".msg":
+            convert_email(name, level + 1)
+
+    message = None
+    outlook = None
