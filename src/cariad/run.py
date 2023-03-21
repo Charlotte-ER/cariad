@@ -29,6 +29,8 @@ def run_cariad(target_directory, reference_spreadsheet, mode):
         
         if extension == 'msg':
             convert_email(new_name)
+    
+    convert_to_pdf()
 
 
 def tell_user(message, mode):
@@ -93,3 +95,50 @@ def convert_email(email, level=1):
 
     message = None
     outlook = None
+
+def convert_to_pdf():
+    # Goes through directory and converts supported files to pdf
+    for file in os.listdir():
+        filepath = os.path.abspath(file)
+        root, ext = os.path.splitext(file)
+
+        # Identify PowerPoint formats and convert to pdf
+        if ext.lower() in [".pptx", ".potx", "ppsx", ".thmx", ".ppt", ".pot", ".pps"]:
+            try:
+                ppt_to_pdf(filepath)
+            except Exception as error:
+                continue
+
+        # Identify Word formats and convert to pdf
+        if ext.lower() in [".doc", ".dot", ".wbk", ".docx", ".docm", ".dotx",
+                ".dotm", ".docb", ".DOCX"]:
+            try:
+                word_to_pdf(filepath)
+            except Exception as error:
+                continue
+
+def ppt_to_pdf(filename):
+    # Converts PowerPoint document to PDF
+    root, ext = os.path.splitext(filename)
+    powerpoint = win32com.client.Dispatch("PowerPoint.Application")
+    document = powerpoint.Presentations.Open(filename, ReadOnly=False)
+    document.SaveAs(f'{root}.pdf', 32)
+    document.Close()
+    powerpoint.Quit()
+    document = None
+    powerpoint = None
+    os.remove(filename)
+
+
+def word_to_pdf(filename):
+    # Converts Word document to PDF
+    word = win32com.client.Dispatch("Word.Application")
+    # word.Visible = False  '''Leaving False until can handle pop ups'''
+    document = word.Documents.Open(filename, ReadOnly=False)
+    root, ext = os.path.splitext(filename)
+    document.SaveAs(f'{root}.pdf', 17)
+    document.Close(SaveChanges=False)
+    word.Quit()
+    document = None
+    word = None
+    os.remove(filename)
