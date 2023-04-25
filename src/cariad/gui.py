@@ -59,6 +59,11 @@ def run_gui():
                                     state = tkinter.NORMAL)
     ask_reference_spreadsheet_button.pack(padx = 10)
 
+    ttk.Label(title_frame, text = variables.PRE_WARNING,
+                    wraplength = 600,
+                    justify = tkinter.CENTER,
+                    font = ('Calibri', 10)).pack()
+
     run_button = ttk.Button(title_frame, 
                             text = "Run Cariad",
                             command = run_command,
